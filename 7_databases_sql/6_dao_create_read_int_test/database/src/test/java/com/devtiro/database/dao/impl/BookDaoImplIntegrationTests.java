@@ -33,10 +33,12 @@ public class BookDaoImplIntegrationTests {
     @Test
     public void testThatBookCanBeCreatedAndRecalled() {
         Author author = TestDataUtil.createTestAuthor();
-        authorDao.create(author);
         Book book = TestDataUtil.createTestBook();
+
+        authorDao.create(author);
         book.setAuthorId(author.getId());
         underTest.create(book);
+
         Optional<Book> result = underTest.find(book.getIsbn());
         assertThat(result).isPresent();
         assertThat(result.get()).isEqualTo(book);

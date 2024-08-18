@@ -2,6 +2,7 @@ package com.devtiro.database.dao.impl;
 
 import com.devtiro.database.TestDataUtil;
 import com.devtiro.database.domain.Book;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
@@ -29,10 +30,10 @@ public class BookDaoImplTests {
         underTest.create(book);
 
         verify(jdbcTemplate).update(
-                eq("INSERT INTO books (isbn, title, author_id) VALUES (?, ?, ?)"),
-                eq("978-1-2345-6789-0"),
-                eq("The Shadow in the Attic"),
-                eq(1L)
+            eq("INSERT INTO books (isbn, title, author_id) VALUES (?, ?, ?)"),
+            eq("978-1-2345-6789-0"),
+            eq("The Shadow in the Attic"),
+            eq(1L)
         );
     }
 
@@ -40,9 +41,9 @@ public class BookDaoImplTests {
     public void testThatFindOneBookGeneratesCorrectSql() {
         underTest.findOne("978-1-2345-6789-0");
         verify(jdbcTemplate).query(
-                eq("SELECT isbn, title, author_id from books WHERE isbn = ? LIMIT 1"),
-                ArgumentMatchers.<BookDaoImpl.BookRowMapper>any(),
-                eq("978-1-2345-6789-0")
+            eq("SELECT isbn, title, author_id from books WHERE isbn = ? LIMIT 1"),
+            ArgumentMatchers.<BookDaoImpl.BookRowMapper>any(),
+            eq("978-1-2345-6789-0")
         );
     }
 
@@ -50,8 +51,8 @@ public class BookDaoImplTests {
     public void testThatFindGeneratesCorrectSql() {
         underTest.find();
         verify(jdbcTemplate).query(
-                eq("SELECT isbn, title, author_id from books"),
-                ArgumentMatchers.<BookDaoImpl.BookRowMapper>any()
+            eq("SELECT isbn, title, author_id from books"),
+            ArgumentMatchers.<BookDaoImpl.BookRowMapper>any()
         );
     }
 
@@ -60,8 +61,8 @@ public class BookDaoImplTests {
         Book book = TestDataUtil.createTestBookA();
         underTest.update("978-1-2345-6789-0", book);
         verify(jdbcTemplate).update(
-                "UPDATE books SET isbn = ?, title = ?, author_id = ? WHERE isbn = ?",
-                "978-1-2345-6789-0", "The Shadow in the Attic", 1L, "978-1-2345-6789-0"
+            "UPDATE books SET isbn = ?, title = ?, author_id = ? WHERE isbn = ?",
+            "978-1-2345-6789-0", "The Shadow in the Attic", 1L, "978-1-2345-6789-0"
         );
     }
 

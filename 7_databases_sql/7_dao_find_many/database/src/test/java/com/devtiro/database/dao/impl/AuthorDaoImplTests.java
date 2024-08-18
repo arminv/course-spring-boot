@@ -2,6 +2,7 @@ package com.devtiro.database.dao.impl;
 
 import com.devtiro.database.TestDataUtil;
 import com.devtiro.database.domain.Author;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
@@ -29,8 +30,8 @@ public class AuthorDaoImplTests {
         underTest.create(author);
 
         verify(jdbcTemplate).update(
-                eq("INSERT INTO authors (id, name, age) VALUES (?, ?, ?)"),
-                eq(1L), eq("Abigail Rose"), eq(80)
+            eq("INSERT INTO authors (id, name, age) VALUES (?, ?, ?)"),
+            eq(1L), eq("Abigail Rose"), eq(80)
         );
     }
 
@@ -38,9 +39,9 @@ public class AuthorDaoImplTests {
     public void testThatFindOneGeneratesTheCorrectSql() {
         underTest.findOne(1L);
         verify(jdbcTemplate).query(
-                eq("SELECT id, name, age FROM authors WHERE id = ? LIMIT 1"),
-                ArgumentMatchers.<AuthorDaoImpl.AuthorRowMapper>any(),
-                eq(1L)
+            eq("SELECT id, name, age FROM authors WHERE id = ? LIMIT 1"),
+            ArgumentMatchers.<AuthorDaoImpl.AuthorRowMapper>any(),
+            eq(1L)
         );
     }
 
@@ -48,8 +49,9 @@ public class AuthorDaoImplTests {
     public void testThatFindManyGeneratesCorrectSql() {
         underTest.find();
         verify(jdbcTemplate).query(
-                eq("SELECT id, name, age FROM authors"),
-                ArgumentMatchers.<AuthorDaoImpl.AuthorRowMapper>any()
+            eq("SELECT id, name, age FROM authors"),
+            ArgumentMatchers.<AuthorDaoImpl.AuthorRowMapper>any()
         );
     }
+
 }

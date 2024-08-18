@@ -4,6 +4,7 @@ import com.devtiro.database.TestDataUtil;
 import com.devtiro.database.dao.AuthorDao;
 import com.devtiro.database.domain.Author;
 import com.devtiro.database.domain.Book;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +19,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
+// This cleans the context (depending on when you want it) so we don't get test pollution (e.g. record already created in a previous test, etc.)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class BookDaoImplIntegrationTests {
 
-    private AuthorDao authorDao;
-    private BookDaoImpl underTest;
+    private final AuthorDao   authorDao;
+    private final BookDaoImpl underTest;
 
     @Autowired
     public BookDaoImplIntegrationTests(BookDaoImpl underTest, AuthorDao authorDao) {
@@ -37,7 +39,9 @@ public class BookDaoImplIntegrationTests {
         Book book = TestDataUtil.createTestBookA();
         book.setAuthorId(author.getId());
         underTest.create(book);
+
         Optional<Book> result = underTest.findOne(book.getIsbn());
+
         assertThat(result).isPresent();
         assertThat(result.get()).isEqualTo(book);
     }
@@ -61,7 +65,7 @@ public class BookDaoImplIntegrationTests {
 
         List<Book> result = underTest.find();
         assertThat(result)
-                .hasSize(3)
-                .containsExactly(bookA, bookB, bookC);
+            .hasSize(3)
+            .containsExactly(bookA, bookB, bookC);
     }
 }

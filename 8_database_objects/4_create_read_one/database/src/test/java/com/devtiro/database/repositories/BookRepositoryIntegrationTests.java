@@ -3,6 +3,7 @@ package com.devtiro.database.repositories;
 import com.devtiro.database.TestDataUtil;
 import com.devtiro.database.domain.Author;
 import com.devtiro.database.domain.Book;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class BookRepositoryIntegrationTests {
 
-    private BookRepository underTest;
+    private final BookRepository underTest;
 
     @Autowired
     public BookRepositoryIntegrationTests(BookRepository underTest) {

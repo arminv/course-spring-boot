@@ -2,6 +2,7 @@ package com.devtiro.database.repositories;
 
 import com.devtiro.database.TestDataUtil;
 import com.devtiro.database.domain.Author;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,8 +46,8 @@ public class AuthorRepositoryIntegrationTests {
 
         Iterable<Author> result = underTest.findAll();
         assertThat(result)
-                .hasSize(3).
-                containsExactly(authorA, authorB, authorC);
+            .hasSize(3).
+            containsExactly(authorA, authorB, authorC);
     }
 
     @Test

@@ -31,8 +31,10 @@ public class BookRepositoryIntegrationTests {
     public void testThatBookCanBeCreatedAndRecalled() {
         Author author = TestDataUtil.createTestAuthorA();
         Book book = TestDataUtil.createTestBookA(author);
+
         underTest.save(book);
         Optional<Book> result = underTest.findById(book.getIsbn());
+
         assertThat(result).isPresent();
         assertThat(result.get()).isEqualTo(book);
     }
